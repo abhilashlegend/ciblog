@@ -7,6 +7,7 @@
 </div>
 <div class="row mt-3">
 	<div class="col-sm-12 text-end">
+		<a href="<?php echo site_url() . 'posts/edit/' . $post['id']; ?>" class="btn btn-success">Edit</a>
 		<a href="<?php echo site_url() . 'posts/delete/' . $post['id']; ?>" class="btn btn-danger">Delete</a>
 	</div>
 </div>
