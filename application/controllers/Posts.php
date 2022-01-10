@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Posts extends CI_Controller {
 
@@ -26,6 +27,8 @@ class Posts extends CI_Controller {
 
 		$data['title'] = $data['post']['title'];
 
+		$data['category'] = $this->category_model->get_categories($data['post']['category_id']);
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('posts/view', $data);
 		$this->load->view('templates/footer');
@@ -40,13 +43,29 @@ class Posts extends CI_Controller {
 		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('content', 'Content', 'required');
 
+		$data['categories'] = $this->category_model->get_categories();
+
 
 		if($this->form_validation->run() === FALSE) {
 			$this->load->view('templates/header', $data);
 			$this->load->view('posts/create', $data);
 			$this->load->view('templates/footer');
 		} else {
-			$this->post_model->create_post();
+			// Upload Image
+			$config['upload_path'] = './assets/uploads/images/posts';
+			$config['allowed_types'] = 'gif|jpeg|jpg|png';
+
+			$this->load->library('upload', $config);
+
+			if(!$this->upload->do_upload('postImage')) {
+				$errors = array('error' => $this->upload->display_errors());
+				$post_image = 'noimage.jpg';
+			} else {
+				$data = array('upload_data' => $this->upload->data());
+				$post_image = $_FILES['postImage']['name'];
+			}
+
+			$this->post_model->create_post($post_image);
 			redirect('posts');
 		}
 		
@@ -58,6 +77,8 @@ class Posts extends CI_Controller {
 		$data['post'] = $this->post_model->get_posts_by_id($id);
 
 		$data['title'] = 'Edit Post';
+
+		$data['categories'] = $this->category_model->get_categories();
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('posts/edit', $data);

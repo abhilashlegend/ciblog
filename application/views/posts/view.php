@@ -1,7 +1,16 @@
 <h1><?php echo $post['title']; ?></h1>
-<p>
-	<small><strong>Created On:</strong> <?php echo $post['created_at']; ?></small>
-</p>
+<div class="row">
+	<div class="col-sm-6">
+		<p>
+			<small><strong>Created On:</strong> <?php echo $post['created_at']; ?></small>
+		</p>
+	</div>
+	<div class="col-sm-6">
+		<p>
+			<small><strong>Category: </strong> <?php echo $category['name']; ?></p></small> 
+		</p>
+	</div>
+</div>
 <div class="post-body">
 	<?php echo $post['body']; ?>
 </div>

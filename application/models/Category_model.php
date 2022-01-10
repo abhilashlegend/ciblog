@@ -17,9 +17,23 @@
 		}
 
 		public function create_category() {
-			$data = array('name' => $this->input->post('name'));
+			$data = array('name' => strip_tags($this->input->post('name')));
 			return $this->db->insert('categories',$data);
 		}
+
+
+		public function update_category() {
+			$data = array('name' => $this->input->post('catName'));
+			$this->db->where('id', $this->input->post('catId'));
+			return $this->db->update('categories', $data);
+		}
+
+		public function delete_category($id) {
+			$this->db->where('id', $id);
+			$this->db->delete('categories');
+			return true;
+		}
+
 	}
 
 ?>

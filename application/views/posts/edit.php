@@ -11,6 +11,22 @@
 	    </div>
 	 </div>
 	 <div class="row mb-3">
+	 	<label for="category" class="col-sm-2 col-form-label">Category</label>
+	 	 <div class="col-sm-10">
+	 	 	<select name="category" id="category" class="form-select">
+	 	 	<?php foreach($categories as $category): ?>
+	 	 			<?php if($post['category_id'] == $category['id']) {
+	 	 				$selected = "selected='selected'";
+	 	 			} else {
+	 	 				$selected = "";
+	 	 			}
+	 	 			?>
+	 	 			<option value="<?php echo $category['id']; ?>" <?php echo $selected; ?>><?php echo $category['name']; ?></option>
+			<?php endforeach; ?>			 	 			
+	 	 	</select>
+	 	 </div>
+	 </div>
+	 <div class="row mb-3">
 	    <label for="content" class="col-sm-2 col-form-label">Content</label>
 	    <div class="col-sm-10">
 	      <textarea rows="10" id="content" name="content" class="form-control"><?php echo $post['body']; ?></textarea>

@@ -21,12 +21,14 @@
 			return $query->row_array();
 		}
 
-		public function create_post() {
+		public function create_post($post_image) {
 			$slug = url_title($this->input->post('title'));
 
 			$data = array(
 				'title' => $this->input->post('title'),
+				'image' => $post_image,
 				'slug' => $slug,
+				'category_id' => $this->input->post('category'),
 				'body' => $this->input->post('content')
 			);
 
@@ -39,6 +41,7 @@
 			$data = array(
 				'title' => $this->input->post('title'),
 				'slug' => $slug,
+				'category_id' => $this->input->post('category'),
 				'body' => $this->input->post('content')
 			);
 
