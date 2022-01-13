@@ -35,11 +35,12 @@
 			return $this->db->insert('posts', $data);
 		}
 
-		public function update_post() {
+		public function update_post($post_image) {
 			$slug = url_title($this->input->post('title'));
 
 			$data = array(
 				'title' => $this->input->post('title'),
+				'image' => $post_image,
 				'slug' => $slug,
 				'category_id' => $this->input->post('category'),
 				'body' => $this->input->post('content')

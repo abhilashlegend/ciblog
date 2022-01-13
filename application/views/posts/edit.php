@@ -2,13 +2,21 @@
 
 <?php echo validation_errors('<div class="alert alert-danger" role="alert">','</div>'); ?>
 
-<?php echo form_open('posts/update'); ?>
+<?php echo form_open_multipart('posts/update'); ?>
 	<input type="hidden" name="id" value="<?php echo $post['id'] ?>" />
+	<input type="hidden" name="oldImage" value="<?php echo $post['image']; ?>">
 	<div class="row mb-3">
 	    <label for="title" class="col-sm-2 col-form-label">Title</label>
 	    <div class="col-sm-10">
 	      <input type="text" class="form-control" id="title" value="<?php echo $post['title']; ?>" name="title">
 	    </div>
+	 </div>
+	 <div class="row mb-3">
+	 	<label for="post-image" class="col-sm-2 col-form-label">Post Image</label>
+	 	<div class="col-sm-10">
+	 			<img src="<?php echo site_url() . 'assets/uploads/images/posts/' . $post['image']; ?>" alt="<?php echo $post['image']; ?>" class="img-fluid" width="200" />
+	 		 <input class="form-control" type="file" id="post-image" name="postImage" />
+	 	</div>
 	 </div>
 	 <div class="row mb-3">
 	 	<label for="category" class="col-sm-2 col-form-label">Category</label>

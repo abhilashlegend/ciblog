@@ -59,7 +59,7 @@ class Posts extends CI_Controller {
 
 			if(!$this->upload->do_upload('postImage')) {
 				$errors = array('error' => $this->upload->display_errors());
-				$post_image = 'noimage.jpg';
+				$post_image = 'noimage.png';
 			} else {
 				$data = array('upload_data' => $this->upload->data());
 				$post_image = $_FILES['postImage']['name'];
@@ -73,6 +73,8 @@ class Posts extends CI_Controller {
 
 	// Edit post method
 	public function edit($id) {
+
+
 
 		$data['post'] = $this->post_model->get_posts_by_id($id);
 
@@ -88,8 +90,45 @@ class Posts extends CI_Controller {
 
 	// Update post method
 	public function update() {
-		$this->post_model->update_post();
-		redirect('posts');
+
+		$this->form_validation->set_rules('title', 'Title', 'required');
+		$this->form_validation->set_rules('content', 'Content', 'required');
+
+		$id = $this->input->post('id');
+		$oldImage = $this->input->post('oldImage');
+
+		if($this->form_validation->run())
+		{
+
+			// Upload Image
+			$config['upload_path'] = './assets/uploads/images/posts';
+			$config['allowed_types'] = 'gif|jpeg|jpg|png';
+
+			$this->load->library('upload', $config);
+
+			//var_dump($this->upload->do_upload('postImage')); exit();
+
+			if(!$this->upload->do_upload('postImage')) {
+				$errors = array('error' => $this->upload->display_errors());
+				$post_image = $oldImage;
+			} else {
+				$data = array('upload_data' => $this->upload->data());
+				$post_image = $_FILES['postImage']['name'];
+
+				if(file_exists("./assets/uploads/images/posts/" . $oldImage && $post_image != 'noimage.png')) {
+					unlink("./assets/uploads/images/posts/" . $oldImage);
+				}
+			}
+
+			$this->post_model->update_post($post_image);
+			redirect('posts');
+		} else {
+			return $this->edit($id);
+		}
+
+		/*
+		
+		*/
 	}
 
 	// Delete post method
