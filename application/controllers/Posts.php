@@ -4,10 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Posts extends CI_Controller {
 
 	// Get all posts
-	public function index() {
+	public function index($category_name = NULL) {
 		
-		$data['title'] = "Latest Posts";
-		$data['posts'] = $this->post_model->get_posts();
+		$data['categories'] = $this->category_model->get_categories();
+		
+		if($category_name == NULL) {
+			$data['title'] = "Latest Posts";
+			$data['posts'] = $this->post_model->get_posts();
+		} else {
+			$data['title'] = $category_name;
+			$data['posts'] = $this->post_model->get_posts_by_category($category_name);
+
+		}
+		
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('posts/index', $data);
@@ -52,8 +61,10 @@ class Posts extends CI_Controller {
 			$this->load->view('templates/footer');
 		} else {
 			// Upload Image
+			$update_filename = time() . "-" . str_replace(' ', '-', $_FILES['postImage']['name']);
 			$config['upload_path'] = './assets/uploads/images/posts';
 			$config['allowed_types'] = 'gif|jpeg|jpg|png';
+			$config['file_name'] = $update_filename;
 
 			$this->load->library('upload', $config);
 
@@ -62,7 +73,7 @@ class Posts extends CI_Controller {
 				$post_image = 'noimage.png';
 			} else {
 				$data = array('upload_data' => $this->upload->data());
-				$post_image = $_FILES['postImage']['name'];
+				$post_image = $update_filename;
 			}
 
 			$this->post_model->create_post($post_image);
@@ -101,8 +112,10 @@ class Posts extends CI_Controller {
 		{
 
 			// Upload Image
+			$update_filename = time() . "-" . str_replace(' ', '-', $_FILES['postImage']['name']);
 			$config['upload_path'] = './assets/uploads/images/posts';
 			$config['allowed_types'] = 'gif|jpeg|jpg|png';
+			$config['file_name'] = $update_filename;
 
 			$this->load->library('upload', $config);
 
@@ -113,28 +126,32 @@ class Posts extends CI_Controller {
 				$post_image = $oldImage;
 			} else {
 				$data = array('upload_data' => $this->upload->data());
-				$post_image = $_FILES['postImage']['name'];
+				$post_image = $update_filename;
 
-				if(file_exists("./assets/uploads/images/posts/" . $oldImage && $post_image != 'noimage.png')) {
-					unlink("./assets/uploads/images/posts/" . $oldImage);
+				if(file_exists("./assets/uploads/images/posts/" . $post_image) && $post_image != 'noimage.png') {
+					unlink("./assets/uploads/images/posts/" . $post_image);
 				}
 			}
 
-			$this->post_model->update_post($post_image);
+			$this->post_model->update_post($update_filename);
 			redirect('posts');
 		} else {
 			return $this->edit($id);
 		}
-
-		/*
-		
-		*/
 	}
 
 	// Delete post method
 	public function delete($id) {
-		$this->post_model->delete_post($id);
-		redirect('posts');
+		// Delete image
+		$post = $this->post_model->get_posts_by_id($id);
+		$image = $post['image'];
+
+		if(file_exists("./assets/uploads/images/posts/" . $image) && $image != 'noimage.png') {
+				unlink("./assets/uploads/images/posts/" . $image);
+		}
+
+			$this->post_model->delete_post($id);
+			redirect('posts');
 	}
 
 

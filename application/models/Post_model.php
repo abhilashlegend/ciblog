@@ -21,6 +21,15 @@
 			return $query->row_array();
 		}
 
+		public function get_posts_by_category($name) {
+				$this->db->select('*');
+				$this->db->from('posts');
+			 	$this->db->join('categories', 'categories.id = posts.category_id','inner');
+			 	$this->db->where('name', $name);
+			 	$query = $this->db->get();
+			 	return $query->result_array();
+		}
+
 		public function create_post($post_image) {
 			$slug = url_title($this->input->post('title'));
 

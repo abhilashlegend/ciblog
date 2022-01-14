@@ -1,4 +1,9 @@
   </main> <!-- ENd of container -->
+  <footer class="footer mt-auto py-3 bg-dark">
+  <div class="container">
+    <span class="text-muted"><small>CI Blog. 2022</small></span>
+  </div>
+</footer>
   <script src="https://cdn.ckeditor.com/ckeditor5/31.1.0/classic/ckeditor.js"></script>
   <script>
                         ClassicEditor

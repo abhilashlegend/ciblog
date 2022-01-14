@@ -1,26 +1,29 @@
 <div class="d-flex justify-content-between">
-	<h1 class="w-100">Latest Posts</h1> 
+	<h1 class="w-100"><?php echo $title; ?></h1> 
 	<a href="<?php echo site_url() . 'posts/create' ?>" class="btn btn-primary m-auto">Create</a>
 	<a href="<?php echo site_url() . 'categories' ?>" class="btn btn-primary m-auto ms-2">Categories</a>
 </div>
-<?php if(count($posts) > 0): ?>
 
-<?php foreach($posts as $post) : ?>
 
-	<article class="bg-default border-bottom mb-2 py-3">
+
+<div class="row">
+	<div class="col-sm-9">
+	<?php if(count($posts) > 0): ?>
+		<?php foreach($posts as $post) : ?>
+			<article class="bg-default border-bottom mb-2 py-3">
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-12">
 				<h2><?php echo $post['title']; ?></h2>
 			</div>
 		</div> <!-- ENd of row -->
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-4">
 		
 				<img src="<?php echo site_url() . 'assets/uploads/images/posts/' . $post['image']; ?>" alt="<?php echo $post['image']; ?>" class="img-fluid" />
 			
 			</div>
 
-			<div class="col-sm-8">
+			<div class="col-8">
 				<p><?php echo word_limiter($post['body'], 50); ?></p>
 				<p class="m-0 d-flex align-items-center">
 					<small class="align-middle"><strong>Created at :</strong> <?php echo $post['created_at']; ?></small>
@@ -54,3 +57,24 @@
 	  </div>
 	</div>
 <?php endif; ?>
+
+
+	</div>
+	<div class="col-sm-3">
+		<aside>
+			<div class="card">
+			  <div class="card-header">
+			    Categories
+			  </div>
+			  <ul class="list-group list-group-flush">
+			  	<?php if(count($categories) > 0): ?>
+			  	<?php foreach($categories as $category): ?>
+				    <li class="list-group-item"><a href="<?php echo base_url() . 'posts/category/' . $category['name']; ?>"><?php echo $category['name']; ?></a></li>
+				<?php endforeach; ?>
+				<?php endif; ?>
+			  </ul>
+			</div>
+		</aside>
+	</div>
+</div>
+	
