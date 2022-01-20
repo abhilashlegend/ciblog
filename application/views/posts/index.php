@@ -12,11 +12,6 @@
 		<?php foreach($posts as $post) : ?>
 			<article class="bg-default border-bottom mb-2 py-3">
 		<div class="row">
-			<div class="col-12">
-				<h2><?php echo $post['title']; ?></h2>
-			</div>
-		</div> <!-- ENd of row -->
-		<div class="row">
 			<div class="col-4">
 		
 				<img src="<?php echo site_url() . 'assets/uploads/images/posts/' . $post['image']; ?>" alt="<?php echo $post['image']; ?>" class="img-fluid" />
@@ -24,6 +19,7 @@
 			</div>
 
 			<div class="col-8">
+				<h2><?php echo $post['title']; ?></h2>
 				<p><?php echo word_limiter($post['body'], 50); ?></p>
 				<p class="m-0 d-flex align-items-center">
 					<small class="align-middle"><strong>Created at :</strong> <?php echo $post['created_at']; ?></small>
@@ -74,6 +70,14 @@
 				<?php endif; ?>
 			  </ul>
 			</div>
+
+			
+			<figure class="mt-4">
+				<a href="#">
+					<img src="<?php echo base_url(); ?>assets/images/ad.jpg" class="img-fluid" alt="advertisement space" />
+				</a>
+			</figure>
+			
 		</aside>
 	</div>
 </div>

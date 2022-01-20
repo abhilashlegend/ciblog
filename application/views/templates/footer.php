@@ -1,5 +1,5 @@
   </main> <!-- ENd of container -->
-  <footer class="footer mt-auto py-3 bg-dark">
+  <footer class="footer mt-3 py-3 bg-dark">
   <div class="container">
     <span class="text-muted"><small>CI Blog. 2022</small></span>
   </div>

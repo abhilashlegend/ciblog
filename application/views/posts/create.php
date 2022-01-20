@@ -6,29 +6,71 @@
 	<div class="row mb-3">
 	    <label for="title" class="col-sm-2 col-form-label">Title</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="title" name="title">
+	     
+	      <?php               
+                $data = array(
+                    'class' => 'form-control',
+                    'name'  => 'title',
+                    'placeholder' => '',
+                    'aria-label' => 'Enter title',
+                    'id' => 'title',
+                    'value' => set_value('title')
+                );
+                echo form_input($data);
+                
+                ?>
 	    </div>
 	 </div>
 	 <div class="row mb-3">
 	 	<label for="post-image" class="col-sm-2 col-form-label">Post Image</label>
 	 	<div class="col-sm-10">
-	 		 <input class="form-control" type="file" id="post-image" name="postImage" />
+	 		 
+	 		 <?php 
+	 		 	$data = array(
+	 		 		'class' => 'form-control',
+	 		 		'name'  => 'postImage',
+	 		 		'id'	=> 'post-image',
+	 		 		'value' => set_value('postImage')
+	 		 	);
+	 		 	echo form_upload($data);
+	 		 ?>
 	 	</div>
 	 </div>
 	 <div class="row mb-3">
 	 	<label for="category" class="col-sm-2 col-form-label">Category</label>
 	 	 <div class="col-sm-10">
-	 	 	<select name="category" id="category" class="form-select">
-	 	 	<?php foreach($categories as $category): ?>
-	 	 			<option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
-			<?php endforeach; ?>			 	 			
-	 	 	</select>
+	 	 	
+	 	 	<?php 
+	 	 		$data = array(
+	 	 			'name'	=> 'category',
+	 	 			'id'	=> 'category',
+	 	 			'class' => 'form-select'
+	 	 		);
+		 	 	$options = array();
+		 	 	foreach($categories as $category) {
+		 	 		$options[$category['id']] = $category['name'];
+		 	 	}
+
+		 	 	$selected = set_value('category');
+
+		 	 	echo form_dropdown($data, $options, $selected);
+	 	 	?>
 	 	 </div>
 	 </div>
 	 <div class="row mb-3">
 	    <label for="content" class="col-sm-2 col-form-label">Content</label>
 	    <div class="col-sm-10">
-	      <textarea rows="10" id="content" name="content" class="form-control"></textarea>
+	      <?php 
+                $data = array(
+                    'class' => 'form-control',
+                    'name'  => 'content',
+                    'placeholder' => '',
+                    'aria-label' => 'Enter post content',
+                    'id' => 'content',
+                    'value' => set_value('content')
+                );
+                echo form_textarea($data);      
+           ?>
 	    </div>
 	 </div>
 	 <div class="row">

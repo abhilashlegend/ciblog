@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Posts extends CI_Controller {
 
+
 	// Get all posts
 	public function index($category_name = NULL) {
 		
@@ -22,10 +23,20 @@ class Posts extends CI_Controller {
 		$this->load->view('posts/index', $data);
 		$this->load->view('templates/footer');
 
-	}	
+	}
+
 
 	// Get single post
 	public function view($slug = NULL) {
+
+		$this->load->helper('captcha_helper');
+
+		$captcha = create_captcha();
+
+		// Send captcha image to view
+        $data['captchaImg'] = $captcha['image'];
+		$data['code'] = $captcha['word'];
+	
 
 		$data['post'] = $this->post_model->get_posts($slug);
 
@@ -128,8 +139,8 @@ class Posts extends CI_Controller {
 				$data = array('upload_data' => $this->upload->data());
 				$post_image = $update_filename;
 
-				if(file_exists("./assets/uploads/images/posts/" . $post_image) && $post_image != 'noimage.png') {
-					unlink("./assets/uploads/images/posts/" . $post_image);
+				if(file_exists("./assets/uploads/images/posts/" . $oldImage) && $oldImage != 'noimage.png') {
+					unlink("./assets/uploads/images/posts/" . $oldImage);
 				}
 			}
 

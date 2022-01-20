@@ -8,30 +8,57 @@
 	<div class="row mb-3">
 	    <label for="title" class="col-sm-2 col-form-label">Title</label>
 	    <div class="col-sm-10">
-	      <input type="text" class="form-control" id="title" value="<?php echo $post['title']; ?>" name="title">
+	      
+	      <?php
+	      	$attributes = array(
+	      		'name'  => 'title',
+	      		'class' => 'form-control',
+	      		'id'	=> 'title',
+	      		'value' => $post['title']
+	      	);
+
+	      	echo form_input($attributes);
+
+	      ?>
 	    </div>
 	 </div>
 	 <div class="row mb-3">
 	 	<label for="post-image" class="col-sm-2 col-form-label">Post Image</label>
 	 	<div class="col-sm-10">
 	 			<img src="<?php echo site_url() . 'assets/uploads/images/posts/' . $post['image']; ?>" alt="<?php echo $post['image']; ?>" class="img-fluid" width="200" />
-	 		 <input class="form-control" type="file" id="post-image" name="postImage" />
+	 		 
+
+	 		 <?php
+	 		 	$attributes = array(
+	 		 		'name' 	=> 'postImage',
+	 		 		'id' 	=> 'post-image',
+	 		 		'class' => 'form-control'
+	 		 	);
+	 		 	echo form_upload($attributes);
+	 		 ?>
 	 	</div>
 	 </div>
 	 <div class="row mb-3">
 	 	<label for="category" class="col-sm-2 col-form-label">Category</label>
 	 	 <div class="col-sm-10">
-	 	 	<select name="category" id="category" class="form-select">
-	 	 	<?php foreach($categories as $category): ?>
-	 	 			<?php if($post['category_id'] == $category['id']) {
-	 	 				$selected = "selected='selected'";
-	 	 			} else {
-	 	 				$selected = "";
-	 	 			}
-	 	 			?>
-	 	 			<option value="<?php echo $category['id']; ?>" <?php echo $selected; ?>><?php echo $category['name']; ?></option>
-			<?php endforeach; ?>			 	 			
-	 	 	</select>
+	 	 	
+	 	 	<?php
+	 	 		$attributes = array(
+	 	 			'name' 	=> 'category',
+	 	 			'id'	=> 'category',
+	 	 			'class'	=> 'form-select'
+	 	 		);
+
+	 	 		$options = array();
+
+	 	 		foreach($categories as $category) {
+	 	 			$options[$category['id']] = $category['name'];
+	 	 		}
+
+	 	 		$selected = $post['category_id'];
+
+	 	 		echo form_dropdown($attributes, $options, $selected);
+	 	 	?>
 	 	 </div>
 	 </div>
 	 <div class="row mb-3">
