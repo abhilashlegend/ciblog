@@ -33,7 +33,7 @@ class Comments extends CI_Controller {
 			
 		} else {
 			$this->comment_model->create_comment();
-			$this->session->set_flashdata('message','Category added successfully');
+			$this->session->set_flashdata('message','Comment Added');
 		}
 		redirect('posts/' . $postSlug);
 

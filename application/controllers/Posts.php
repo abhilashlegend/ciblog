@@ -47,7 +47,11 @@ class Posts extends CI_Controller {
 
 		$data['title'] = $data['post']['title'];
 
+		$data['message'] = $this->session->flashdata('message');
+
 		$data['category'] = $this->category_model->get_categories($data['post']['category_id']);
+
+		$data['comments'] = $this->comment_model->get_comments_by_post($data['post']['id']);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('posts/view', $data);
