@@ -28,6 +28,9 @@
         <li class="nav-item">
           <a class="nav-link <?php echo $active = $title == 'Latest Posts' ? 'active' : '' ?>" href="<?php echo base_url(); ?>posts">Blog</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link <?php echo $active = $title == 'Register' ? 'active' : '' ?>" href="<?php echo base_url(); ?>register">Register</a>
+        </li>
       </ul>
       <form class="d-flex">
         <input class="form-control me-sm-2" type="text" placeholder="Search">

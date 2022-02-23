@@ -57,6 +57,7 @@ $route['posts/update'] = 'posts/update';
 $route['posts/category/(:any)'] = 'posts/index/$1';
 $route['posts/(:any)'] = 'posts/view/$1';
 $route['posts'] = 'posts/index';
+$route['register'] = 'auth/register';
 $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'pages/view/$1'; // Enables url access without pages/view
 $route['404_override'] = '';
