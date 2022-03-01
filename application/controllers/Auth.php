@@ -6,7 +6,7 @@ class Auth extends CI_Controller {
 	public function register() {
 
 		
-
+		
 		$this->load->helper('captcha_helper');
 		$this->load->helper('input_attribute_helper');
 
@@ -38,10 +38,20 @@ class Auth extends CI_Controller {
 			$set = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			$activation_code = substr(str_shuffle($set), 0, 12);
 
-			$this->sendAccountActivationEmail();
 
-			$this->user_model->create_user($activation_code);
-			$this->session->set_flashdata('message','User Created Successfully');
+			$createUser = $this->user_model->create_user($activation_code);
+			if($createUser) {
+
+				$sendMail = $this->sendAccountActivationEmail($this->input->post('email'), $activation_code);
+
+				if($sendMail) {
+					$this->session->set_flashdata('message','Please check your email to login');
+				}
+				
+			} else {
+				$this->session->set_flashdata('error','Something went wrong!');
+			}
+			
 			redirect('/');
 		}
 
@@ -60,8 +70,50 @@ class Auth extends CI_Controller {
 	    }
 	}
 
-	public function sendAccountActivationEmail() {
+	public function sendAccountActivationEmail($toEmail, $activationLink) {
+		$from_email = "admin@ciblog.com";
+		$to_email = $toEmail;
 
+		// Load Email Library
+		if(ENVIRONMENT == "development") {
+			$config = array(
+			    'protocol' => 'ssmtp',
+			    'smtp_host' => 'ssl://ssmtp.gmail.com', 
+			    'smtp_port' => '465',
+			    'smtp_user' => 'abhilash.ciblog@gmail.com',
+			    'smtp_pass' => '@ciblog123456789',
+			    'mailtype' => 'html',
+			    'smtp_timeout' => '4', 
+			    'charset' => 'iso-8859-1',
+			    'wordwrap' => TRUE
+			);
+			$this->load->library('email', $config);
+		} else {
+			$this->load->library('email');
+		}
+		
+
+		$this->email->from($from_email, 'CiBlog');
+		$this->email->to($to_email);
+		$this->email->subject('Please activate your ciblog account');
+
+		$body = 'Please click on the activation link to successfully login to your account ' . site_url() . 'auth/user/' . $activationLink;
+
+		$this->email->message($body);
+
+		return $this->email->send();
+	}
+
+	function activate($code) {
+		$activated = $this->user_model->activateUser($code);
+
+		if($activated) {
+			$this->session->set_flashdata('message','User activated successfully, you can now login.');
+		} else {
+			$this->session->set_flashdata('error','User could not be activated');
+		}
+
+		redirect('/');
 	}
 }
 

@@ -6,6 +6,8 @@ class Posts extends CI_Controller {
 
 	// Get all posts
 	public function index($category_name = NULL) {
+
+		$this->load->helper('input_attribute_helper');
 		
 		$data['categories'] = $this->category_model->get_categories();
 		

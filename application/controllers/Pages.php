@@ -9,6 +9,10 @@ class Pages extends CI_Controller {
 
 		$data['title'] = ucfirst($page);
 
+		$data['message'] = $this->session->flashdata('message');
+
+		$data['error'] = $this->session->flashdata('error');
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('pages/' . $page, $data);
 		$this->load->view('templates/footer');

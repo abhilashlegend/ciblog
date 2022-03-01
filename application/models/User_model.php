@@ -22,6 +22,16 @@
 
 			return $this->db->insert('users', $data);
 		}
+
+
+		public function activateUser($code) {
+			$data = array(
+				'active' => true
+			);
+
+			$this->db->where('activation', $code);
+			return $this->db->update('users', $data);
+		}
 	}
 
 ?>

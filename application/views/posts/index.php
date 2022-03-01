@@ -58,6 +58,60 @@
 	</div>
 	<div class="col-sm-3">
 		<aside>
+			<div class="card mb-4">
+			  <div class="card-header">
+			    Login
+			  </div>
+			  <div>
+			  	<?php echo form_open('auth/login'); ?>
+			  		<div class="my-3 px-3">
+			  			<?php
+					    	$attributes = array(
+					    		'name' 				=> 'username',
+					    		'id'				=> 'username',
+					    		'class' 			=> 'form-control',
+					    		'placeholder'		=> 'Username',
+					    		'aria-label'		=> 'username',
+					    		'aria-describedby'	=> 'usernameError',
+					    		'value' 			=> set_value('username')
+					    	);
+
+					    	$attributes = classChecker('username', $attributes);
+
+					    	echo form_input($attributes);
+
+					    	echo form_error('username','<div class="invalid-feedback" id="usernameError">', '</div>');
+
+					    ?>
+			  		</div>
+
+			  		<div class="my-3 px-3">
+			  			<?php
+					    	$attributes = array(
+					    		'name' 				=> 'password',
+					    		'id'				=> 'password',
+					    		'class' 			=> 'form-control',
+					    		'placeholder'		=> 'Password',
+					    		'aria-label'		=> 'password',
+					    		'aria-describedby'	=> 'passwordError'
+					    	);
+
+					    	$attributes = classChecker('password', $attributes);
+
+					    	echo form_password($attributes);
+
+					    	echo form_error('password','<div class="invalid-feedback" id="passwordError">', '</div>');
+
+					    ?>
+			  		</div>
+
+			  		<div class="my-3 px-3">
+			  			<button type="submit" class="btn btn-primary">Submit</button>
+			  		</div>
+			  	</form>
+			  </div>
+			 </div>
+
 			<div class="card">
 			  <div class="card-header">
 			    Categories
