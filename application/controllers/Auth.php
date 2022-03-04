@@ -5,8 +5,6 @@ class Auth extends CI_Controller {
 
 	public function register() {
 
-		
-		
 		$this->load->helper('captcha_helper');
 		$this->load->helper('input_attribute_helper');
 
@@ -114,6 +112,30 @@ class Auth extends CI_Controller {
 		}
 
 		redirect('/');
+	}
+
+	function login() {
+
+		$this->form_validation->set_rules('username','Username','required');
+		$this->form_validation->set_rules('password','Password','required');
+
+		$data = $this->input->post();
+
+		if($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('form_errors', validation_errors());
+
+			foreach($data as $Key => $Value)
+			{
+			   $this->session->set_flashdata($Key, $Value);
+			}
+		}
+
+		redirect('posts');
+	}
+
+	public function logout() {
+		$this->session->sess_destroy();
+		redirect("/");
 	}
 }
 

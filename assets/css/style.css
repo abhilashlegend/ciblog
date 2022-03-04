@@ -39,3 +39,36 @@
 .hit-voting {
     cursor: pointer
 }
+
+
+
+/* ABout page */
+
+.about-hero-content { background: #f6f9ff; padding: 40px; }
+.about-hero-content h2 { font-size: 1.5rem; }
+.about-card { padding: 2rem; text-align: center; }
+.about-card img { transform: scale(1.1); padding: 1rem; transition: 0.5s; }
+.about-card .card-title { color: #012970; font-size: 1.5rem; }
+.about-card:hover { box-shadow: 0px 0px 30px #ccc; }
+.about-card:hover img { transform: scale(1); }
+
+.features .cib-icon { font-size: 44px; line-height: 44px; color: #0245bc; margin-right: 15px; }
+
+
+/* Home page */
+
+.hero { width: 100%; height: 100vh; background: url(../images/hero-bg.png) top center no-repeat; background-size: cover; }
+.hero h1 { margin: 0; font-size: 48px; font-weight: 700; color: #012970; }
+.hero h2 { color: #444444; margin: 15px 0 0 0; font-size: 26px; font-weight: 500;}
+.hero .btn-get-started { margin-top: 30px; line-height: 0; padding: 20px 40px; border-radius: 4px; transition: 0.5s; box-shadow: 0px 5px 30px rgb(65 84 241 / 40%); }
+
+
+.counts { padding: 70px 0 60px; }
+
+.counts .count-box { display: flex; align-items: center; padding: 30px; width: 100%; background: #fff; box-shadow: 0px 0 30px rgb(1 41 112 / 8%); }
+
+.counts .count-box i { font-size: 42px; line-height: 0; margin-right: 20px; color: #4154f1; }
+
+.counts .count-box span { font-size: 36px; display: block; font-weight: 600; color: #0b198f; }
+
+.counts .count-box p { padding: 0; margin: 0; font-family: "Nunito", sans-serif; font-size: 14px;}

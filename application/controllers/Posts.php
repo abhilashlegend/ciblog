@@ -19,11 +19,54 @@ class Posts extends CI_Controller {
 			$data['posts'] = $this->post_model->get_posts_by_category($category_name);
 
 		}
+
+		$this->form_validation->set_rules('username','Username','required');
+		$this->form_validation->set_rules('password','Password','required');
+
+		if($this->form_validation->run() == FALSE) {
+
+			$this->load->view('templates/header', $data);
+			$this->load->view('posts/index', $data);
+			$this->load->view('templates/footer');
+			
+		} else {
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+
+			$result = $this->user_model->loginUser($username, $password);
+
+			$userId = $result[0];
+			$status = $result[1];
+
+			
+			if($result && $status) {
+				$user_data = array( 
+					'user_id'   => $userId,
+					'username'  => $username,
+					'active' => $status,
+					'logged_in' => true
+				);
+
+
+			
+
+			$this->session->set_userdata($user_data);
+			$this->session->set_flashdata('message','You are now logged in');
+
+
+			} else if($status == false && $userId > 0) {
+				$this->session->set_flashdata('error','Please check your email and activate account');
+			}
+			else if($status == false && $result == false) {
+				$this->session->set_flashdata('error','Login Failed! Please check your credentials');
+			}
+
+			redirect('posts');
+		
+		}
 		
 
-		$this->load->view('templates/header', $data);
-		$this->load->view('posts/index', $data);
-		$this->load->view('templates/footer');
+		
 
 	}
 
@@ -94,6 +137,8 @@ class Posts extends CI_Controller {
 			}
 
 			$this->post_model->create_post($post_image);
+
+			$this->session->set_flashdata('message', 'Post created successfully');
 			redirect('posts');
 		}
 		
@@ -150,7 +195,8 @@ class Posts extends CI_Controller {
 				}
 			}
 
-			$this->post_model->update_post($update_filename);
+			$this->post_model->update_post($post_image);
+			$this->session->set_flashdata('message','Post has been updated');
 			redirect('posts');
 		} else {
 			return $this->edit($id);

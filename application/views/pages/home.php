@@ -11,7 +11,6 @@
 </svg>
 <div class="row">
 	<div class="col-sm-12">
-		<h1>Welcome to home page</h1>
 
 		<?php if(isset($message)): ?>
 		<div class="alert alert-success d-flex align-items-center" role="alert">
@@ -34,3 +33,67 @@
 
 	</div>
 </div> <!-- End of row -->
+
+<section class="hero d-flex align-items-center">
+	<div class="row">
+		<div class="col-lg-6 d-flex flex-column justify-content-center px-5">
+			<h1>We offer modern solutions for growing your business</h1>
+			<h2>We are team of talented designers making websites with Bootstrap
+Get Started</h2>
+				<div class="text-center text-lg-start">
+          <a href="<?php echo site_url('/about'); ?>" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center btn btn-primary">
+            <span>Get Started</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+		</div>
+
+		<div class="col-lg-6">
+			<img class="img-fluid" src="<?php echo site_url() . 'assets/images/hero-img.png'; ?>" alt="" />
+		</div>
+	</div>
+</section>
+
+<section class="counts">
+		<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="count-box">
+						<i class="ri-user-smile-line"></i>
+						<div>
+								<span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="10" class="purecounter">232</span>
+								<p>Happy Clients</p>
+						</div>
+					</div>	
+				</div>	
+
+				<div class="col-lg-3 col-md-6">
+					<div class="count-box">
+						<i class="ri-macbook-line"></i>
+						<div>
+								<span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="10" class="purecounter">521</span>
+								<p>Projects</p>
+						</div>
+					</div>	
+				</div>	
+
+				<div class="col-lg-3 col-md-6">
+					<div class="count-box">
+						<i class="ri-headphone-line"></i>
+						<div>
+								<span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="10" class="purecounter">1463</span>
+								<p>Hours of Support</p>
+						</div>
+					</div>	
+				</div>	
+
+				<div class="col-lg-3 col-md-6">
+					<div class="count-box">
+						<i class="ri-team-line"></i>
+						<div>
+								<span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="10" class="purecounter">15</span>
+								<p>Hard Workers</p>
+						</div>
+					</div>	
+				</div>			
+		</div>	
+</section>

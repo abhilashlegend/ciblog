@@ -3,7 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/remixicon.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/style.css" />
 	<title><?php echo $title; ?> - CI Blog</title>
 </head>
@@ -32,10 +35,12 @@
           <a class="nav-link <?php echo $active = $title == 'Register' ? 'active' : '' ?>" href="<?php echo base_url(); ?>register">Register</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      <?php if($this->session->userdata('logged_in')): ?>
+      <div class="d-flex">
+          <a class="btn btn-primary" href="<?php echo base_url() . 'auth/logout'; ?>">Logout</a>
+      </div>
+    <?php endif; ?>
+
     </div>
   </div>
 </nav>
