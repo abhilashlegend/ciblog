@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Comment_model extends CI_Model {
 
@@ -9,9 +10,8 @@ class Comment_model extends CI_Model {
 	public function create_comment() {
 		$data = array(
 			'post_id'	=> $this->input->post('postId'),
-			'name'   	=> strip_tags($this->input->post('name')),
-			'email' 	=> strip_tags($this->input->post('email')),
-			'body' 	=> strip_tags($this->input->post('comment'))
+			'user_id'   => $this->input->post('user_id'),
+			'body' 		=> strip_tags($this->input->post('comment'))
 		);
 
 		return $this->db->insert('comments', $data);
@@ -21,6 +21,12 @@ class Comment_model extends CI_Model {
 		$this->db->order_by('created_at');
 		$query = $this->db->get_where('comments', array('post_id' => $post_id));
 		return $query->result_array();
+	}
+
+	public function delete_comment($id) {
+		$this->db->where('id', $id);
+		$this->db->delete('comments');
+		return true;
 	}
 }
 

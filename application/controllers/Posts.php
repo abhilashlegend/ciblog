@@ -36,13 +36,15 @@ class Posts extends CI_Controller {
 			$result = $this->user_model->loginUser($username, $password);
 
 			$userId = $result[0];
-			$status = $result[1];
+			$role = $result[1];
+			$status = $result[2];
 
 			
 			if($result && $status) {
 				$user_data = array( 
 					'user_id'   => $userId,
 					'username'  => $username,
+					'role'		=> $role,
 					'active' => $status,
 					'logged_in' => true
 				);
@@ -107,6 +109,9 @@ class Posts extends CI_Controller {
 	// Create post method
 	public function create() {
 
+		checkAuth();
+		checkIsAdminOrAuthor();
+
 		$data['title'] = 'Create Post';
 
 		$this->form_validation->set_rules('title', 'Title', 'required');
@@ -148,6 +153,8 @@ class Posts extends CI_Controller {
 	public function edit($id) {
 
 
+		checkAuth();
+		checkIsAdminOrAuthor();
 
 		$data['post'] = $this->post_model->get_posts_by_id($id);
 
@@ -205,6 +212,9 @@ class Posts extends CI_Controller {
 
 	// Delete post method
 	public function delete($id) {
+
+		checkAuth();
+		checkIsAdminOrAuthor();
 		// Delete image
 		$post = $this->post_model->get_posts_by_id($id);
 		$image = $post['image'];

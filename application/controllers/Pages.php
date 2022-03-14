@@ -13,6 +13,10 @@ class Pages extends CI_Controller {
 
 		$data['error'] = $this->session->flashdata('error');
 
+		if($page == 'home') {
+			$data['recent_posts'] = $this->post_model->get_latest_posts();
+		}
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('pages/' . $page, $data);
 		$this->load->view('templates/footer');

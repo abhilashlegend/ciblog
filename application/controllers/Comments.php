@@ -16,8 +16,6 @@ class Comments extends CI_Controller {
 
 		$postSlug = $this->input->post('slug');
 
-		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('comment','Comment','required');
 		$this->form_validation->set_rules('security','Security','required|callback_security_check');
 
@@ -37,6 +35,13 @@ class Comments extends CI_Controller {
 		}
 		redirect('posts/' . $postSlug);
 
+	}
+
+	public function delete($id) {
+		$this->comment_model->delete_comment($id);
+		$this->session->set_flashdata('message', 'Comment deleted successfully');
+
+			redirect('posts/' . $_GET['slug']);
 	}
 }
 

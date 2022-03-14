@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 	class Post_model extends CI_Model {
 		public function __construct() {
 			$this->load->database();
@@ -13,6 +15,12 @@
 
 			$query = $this->db->get_where('posts', array('slug' => $slug));
 			return $query->row_array();
+		}
+
+		public function get_latest_posts() {
+			$this->db->order_by('created_at','ASC')->limit(3, 1);
+			$query = $this->db->get('posts');
+			return $query->result_array();
 		}
 
 

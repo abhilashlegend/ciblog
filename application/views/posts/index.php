@@ -10,14 +10,6 @@
 	  </symbol>
 	</svg>
 
-<div class="d-flex justify-content-between">
-	<h1 class="w-100"><?php echo $title; ?></h1> 
-	<a href="<?php echo site_url() . 'posts/create' ?>" class="btn btn-primary m-auto">Create</a>
-	<a href="<?php echo site_url() . 'categories' ?>" class="btn btn-primary m-auto ms-2">Categories</a>
-</div>
-
-
-
 <div class="row">
 	<div class="col-sm-9">
 	<?php if($this->session->flashdata('message')): ?>
@@ -38,6 +30,13 @@
 		  </div>
 		</div>
 	<?php endif; ?>	
+	<div class="d-flex justify-content-between">
+		<h1 class="w-100"><?php echo $title; ?></h1> 
+		<?php if(isAdmin()): ?>
+		<a href="<?php echo site_url() . 'posts/create' ?>" class="btn btn-primary m-auto">Create</a>
+		<a href="<?php echo site_url() . 'categories' ?>" class="btn btn-primary m-auto ms-2">Categories</a>
+		<?php endif; ?>
+	</div>
 	<?php if(count($posts) > 0): ?>
 		<?php foreach($posts as $post) : ?>
 			<article class="bg-default border-bottom mb-2 py-3">

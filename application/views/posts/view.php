@@ -44,10 +44,12 @@
 	<?php echo $post['body']; ?>
 </div>
 <div class="row my-3">
+	<?php if(isAdminOrAuthor()): ?>
 	<div class="col-sm-12 text-end">
 		<a href="<?php echo site_url() . 'posts/edit/' . $post['id']; ?>" class="btn btn-success">Edit</a>
 		<a href="<?php echo site_url() . 'posts/delete/' . $post['id']; ?>" class="btn btn-danger">Delete</a>
 	</div>
+	<?php endif; ?>
 </div>
 <section id="comment-form" class="comment-form-section">
 <div class="row">
@@ -71,47 +73,35 @@
 	</div>
 </div>
 
-<?php echo form_open('comments/create') ?>
+<?php 
+ $user_id = $this->session->userdata('user_id');
+
+$hidden = array('user_id' => $user_id);
+echo form_open('comments/create', '', $hidden); 
+?>
 <div class="row">
 	
 	<div class="col-sm-6">
 			<div class="mb-3">
-			   <label for="name" class="form-label"><span>*</span> Name</label>
-			   			
-			   <?php
-			   	$attributes = array(
-			   		'name' 	=>	'name',
-			   		'id'	=>	'name',
-			   		'class' =>	'form-control',
-			   		'value' => $this->session->flashdata('name'),
-			   		'required' => ''
-			   	);
+					<label for="comment" class="form-label"><span>*</span> Comment</label>
+				   <textarea rows="5" class="form-control" id="comment" name="comment"><?php echo $this->session->flashdata('comment'); ?></textarea>	
 
-			   	echo form_input($attributes);
-			   ?>    
+				   <input type="hidden" name="postId" value="<?php echo $post['id']; ?>" />
+				   <input type="hidden" name="code" id="code" value="<?php echo $code; ?>" />
+				   <input type="hidden" name="slug" value="<?php echo $post['slug']; ?>" />		
 			</div>
-
-			<div class="mb-3">
-			   <label for="email" class="form-label"><span>*</span> Email</label>
-			   <input type="email" class="form-control" id="email" value="<?php echo $this->session->flashdata('email'); ?>" name="email" required />			    
-			</div>
-
 			<div class="mb-3">
 	            <label for="security"><span>*</span> Security code</label> <br />
 	            <input type="text" class="form-control security-field" id="security" name="security" placeholder="Enter code" required />
 	            <p id="captImg" class="captcha-img" style=""><?php echo $captchaImg; ?></p>
+	            <button type="submit" class="btn btn-primary mt-3">Submit</button>
 	          
 	        </div>			
 	</div>
 	<div class="col-sm-6">
 		<div class="mb-3">
-			   <label for="comment" class="form-label"><span>*</span> Comment</label>
-			   <textarea rows="5" class="form-control" id="comment" name="comment"><?php echo $this->session->flashdata('comment'); ?></textarea>	
-
-			   <input type="hidden" name="postId" value="<?php echo $post['id']; ?>" />
-			   <input type="hidden" name="code" id="code" value="<?php echo $code; ?>" />
-			   <input type="hidden" name="slug" value="<?php echo $post['slug']; ?>" />
-			   <button type="submit" class="btn btn-primary mt-3">Submit</button>    
+			   
+			       
 		</div>
 	</div>
 	
@@ -130,10 +120,14 @@
                
                 <div class="commented-section mt-2">
                     <div class="d-flex flex-row align-items-center commented-user">
-                        <h5 class="me-2"><?php echo $comment['name']; ?></h5>
+                        <h5 class="me-2">
+                        	<?php 
+                        $name = $this->user_model->get_user_fullname_by_id($comment['user_id']); echo $name[0]->first_name . ' ' . $name[0]->last_name; 
+
+                    	?></h5>
                         <span class="dot mb-1"></span>
                         <span class="mb-1 ms-2"><?php echo $comment['created_at']; ?></span>
-                        <button type="button" class="ms-auto align-self-start red-cross btn-close" aria-label="Delete"></button>
+                        <a type="button" class="ms-auto align-self-start red-cross btn-close" href="<?php echo site_url('comments/delete/' . $comment['id'] . '?slug=' . $post['slug']); ?>"  aria-label="Delete"></a>
                     </div>
                     <div class="comment-text-sm"><span><?php echo $comment['body']; ?></span></div>
                     <div class="reply-section">

@@ -3,9 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	class Categories extends CI_Controller {
 	
+		public function __construct() {
+			parent::__construct();
+			checkAuth();
+			checkIsAdmin();
+		}
 
 		// Categories Index Page
 		public function index() {
+
+			
 			$data['title'] = 'Categories';
 			$data['categories'] = $this->category_model->get_categories();
 			$data['message'] = $this->session->flashdata('message');

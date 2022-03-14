@@ -97,3 +97,118 @@ Get Started</h2>
 				</div>			
 		</div>	
 </section>
+
+
+<section id="features" class="features">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<h2>Laboriosam et omnis fuga quis dolor direda fara</h2>
+		</div>
+	</div>	
+
+	<div class="row mt-3">
+		<div class="col-lg-6">
+			<img class="img-fluid" src="<?php echo site_url() . 'assets/images/features.png'; ?>" alt="" />
+		</div>
+
+		<div class="col-lg-6">
+			<div class="row align-self-center gy-4">
+					<div class="col-md-6">
+						<div class="feature-box d-flex">
+							<i class="ri-check-line"></i>
+							<h3>Eos aspernatur rem</h3>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="feature-box d-flex">
+							<i class="ri-check-line"></i>
+							<h3>Volup amet voluptas</h3>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="feature-box d-flex">
+							<i class="ri-check-line"></i>
+							<h3>Alias possimus</h3>
+						</div>	
+					</div>
+
+					<div class="col-md-6">
+						<div class="feature-box d-flex">
+							<i class="ri-check-line"></i>
+							<h3>Facilis neque ipsa</h3>
+						</div>	
+					</div>
+
+					<div class="col-md-6">
+						<div class="feature-box d-flex">
+							<i class="ri-check-line"></i>
+							<h3>Rerum omnis sint</h3>
+						</div>	
+					</div>
+
+					<div class="col-md-6">
+						<div class="feature-box d-flex">
+							<i class="ri-check-line"></i>
+							<h3>Repellendus mollitia</h3>
+						</div>	
+					</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="blog" class="recent-blog">
+	<div class="row">
+		<div class="col-lg-12 text-center">
+			<h2>Recent posts form our Blog</h2>
+		</div>
+	</div>	
+<?php 
+	if($recent_posts):
+?>
+	<div class="row mt-3">
+
+		 <?php foreach($recent_posts as $post) : ?>
+		<div class="col-lg-4">
+			<div class="post-box">
+				<div class="post-img">
+					<img src="<?php echo site_url() . 'assets/uploads/images/posts/' . $post['image']; ?>" class="img-fluid" />
+				</div>
+				<span class="post-date"><?php echo date("F d, h:i:s A", strtotime($post['created_at'])); ?></span>
+				<h3 class="post-title"><?php echo $post['title']; ?></h3>
+				<?php if($this->session->userdata('logged_in')): ?>
+					<a class="readmore stretched-link mt-auto" href="<?php echo site_url('/posts/' . $post['slug']); ?>">Read more <i class="ri-arrow-right-line"></i></a>
+					<?php else: ?>
+						<a type="button" class="readmore stretched-link mt-auto" data-bs-toggle="modal" href="#" data-bs-target="#loginAlert">
+						  Read more
+						  <i class="ri-arrow-right-line"></i>
+						</a>
+					<?php endif; ?>
+			</div>
+		</div>
+	<?php endforeach; ?>
+	</div>
+<?php
+	endif;
+?>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="loginAlert" tabindex="-1" aria-labelledby="loginAlertLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginAlertLabel">Alert!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Please login to view post
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>	

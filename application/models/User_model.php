@@ -1,7 +1,11 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 	class User_model extends CI_Model {
 
 		const SUBSCRIBER = 65468;
+		const AUTHOR = 46468; 
+		const ADMIN = 89796;
 
 		public function __construct() {
 			$this->load->database();
@@ -27,6 +31,13 @@
 			return $this->db->insert('users', $data);
 		}
 
+		public function get_user_fullname_by_id($id) {
+			$this->db->select('first_name, last_name');
+			$this->db->from('users');
+			$this->db->where('id', $id);
+			return $this->db->get()->result();
+		}
+
 
 		public function activateUser($code) {
 			$data = array(
@@ -47,8 +58,9 @@
 
 			if(password_verify($password, $dbPassword)) {
 				$userId = $result->row(1)->id;
+				$role = $result->row(7)->role;
 				$status = (boolean)$result->row(9)->active;
-				return [$userId, $status];
+				return [$userId, $role, $status];
 			} else {
 				return false;
 			}
